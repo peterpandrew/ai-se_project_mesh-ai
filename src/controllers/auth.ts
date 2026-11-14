@@ -41,7 +41,7 @@ export const registerUser = async (
     res.status(400).json({
       success: false,
       data: null,
-      error: 'Email, password, and name are required',
+      error: { message: 'Email, password, and name are required' },
     });
     return;
   }
@@ -50,7 +50,7 @@ export const registerUser = async (
     res.status(400).json({
       success: false,
       data: null,
-      error: 'Password must be at least 8 characters',
+      error: { message: 'Password must be at least 8 characters' },
     });
     return;
   }
@@ -59,7 +59,7 @@ export const registerUser = async (
     res.status(409).json({
       success: false,
       data: null,
-      error: 'A user with this email already exists',
+      error: { message: 'A user with this email already exists' },
     });
     return;
   }
@@ -74,7 +74,7 @@ export const registerUser = async (
       res.status(409).json({
         success: false,
         data: null,
-        error: 'A user with this email already exists',
+        error: { message: 'A user with this email already exists' },
       });
       return;
     }
@@ -85,7 +85,7 @@ export const registerUser = async (
   res.status(201).json({
     success: true,
     data: {
-      _id: user._id,
+      userId: user._id,
       email: user.email,
       name: user.name,
     },
@@ -108,7 +108,7 @@ export const loginUser = async (
     res.status(400).json({
       success: false,
       data: null,
-      error: 'Email and password are required',
+      error: { message: 'Email and password are required' },
     });
     return;
   }
@@ -119,7 +119,7 @@ export const loginUser = async (
     res.status(401).json({
       success: false,
       data: null,
-      error: invalidCredentialsMessage,
+      error: { message: invalidCredentialsMessage },
     });
     return;
   }
@@ -134,7 +134,7 @@ export const loginUser = async (
     data: {
       token,
       user: {
-        _id: user._id,
+        userId: user._id,
         email: user.email,
         name: user.name,
       },

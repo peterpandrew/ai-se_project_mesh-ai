@@ -1,7 +1,6 @@
 import type { RequestHandler } from 'express';
 import jwt from 'jsonwebtoken';
 
-// 1. Update the helper to accept a specific error message
 const unauthorized = (
   res: Parameters<RequestHandler>[1],
   message: string,
@@ -9,7 +8,7 @@ const unauthorized = (
   res.status(401).json({
     success: false,
     data: null,
-    error: message,
+    error: { message },
   });
 };
 
@@ -24,13 +23,11 @@ const hasUserId = (
 export const authenticateToken: RequestHandler = (req, res, next): void => {
   const authorization = req.get('authorization');
 
-  // 2. Check if the header or token is missing altogether
   if (!authorization) {
     unauthorized(res, 'No token provided');
     return;
   }
 
-  // 3. Check if the Bearer format is malformed
   if (!authorization.startsWith('Bearer ')) {
     unauthorized(res, 'Malformed token format');
     return;
@@ -46,7 +43,6 @@ export const authenticateToken: RequestHandler = (req, res, next): void => {
   try {
     payload = jwt.verify(token, process.env.JWT_SECRET!);
   } catch (err) {
-    // 4. Differentiate between an expired token and an invalid/tampered token
     if (err instanceof jwt.TokenExpiredError) {
       unauthorized(res, 'Token expired');
       return;
@@ -55,7 +51,6 @@ export const authenticateToken: RequestHandler = (req, res, next): void => {
     return;
   }
 
-  // 5. Check if the decoded token is missing expected data
   if (!hasUserId(payload)) {
     unauthorized(res, 'Invalid token payload');
     return;
@@ -64,4 +59,5 @@ export const authenticateToken: RequestHandler = (req, res, next): void => {
   req.user = payload;
   next();
 };
+
 

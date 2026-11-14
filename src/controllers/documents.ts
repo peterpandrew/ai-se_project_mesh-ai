@@ -35,7 +35,7 @@ export const uploadDocument = async (
     res.status(400).json({
       success: false,
       data: null,
-      error: 'A file is required',
+      error: { message: 'A file is required' },
     });
     return;
   }
@@ -76,3 +76,4 @@ export const uploadDocument = async (
 export const deleteDocument = (_req: Request, res: Response): void => {
   res.status(204).end();
 };
+

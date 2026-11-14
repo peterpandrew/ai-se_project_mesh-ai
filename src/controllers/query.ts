@@ -21,7 +21,7 @@ export const runQuery = async (
     res.status(400).json({
       success: false,
       data: null,
-      error: 'Question is required',
+      error: { message: 'Question is required' },
     });
     return;
   }
@@ -83,3 +83,4 @@ export const runQuery = async (
     error: null,
   });
 };
+
