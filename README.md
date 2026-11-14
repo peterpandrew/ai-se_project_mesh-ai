@@ -7,9 +7,13 @@ project uses ESLint and Prettier to support consistent code quality.
 
 - An Express server with feature-specific route files for authentication, chats,
   documents, and queries, mounted through a centralized router.
-- Controllers with stubbed responses for the API endpoints.
+- Controllers for chats, documents, messages, and query handling.
 - Middleware for JSON request parsing and request logging.
 - Error handling for unknown routes and server errors.
+- A reusable cosine similarity helper in `src/utils/vector-search.ts` for
+  embedding-based ranking.
+- A dedicated message controller in `src/controllers/messages.ts` for fetching and
+  creating chat messages.
 - A Postman collection with requests and response checks for the API endpoints,
   saved at `postman/mesh-ai.postman_collection.json`.
 
